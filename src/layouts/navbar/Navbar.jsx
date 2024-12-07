@@ -1,7 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ItemNavbar from "./ItemNavbar.jsx";
-import {itemsNavbar} from "../contents/nav-items.js";
+import {itemsNavbar} from "../../contents/nav-items.js";
 
 const user = {
     name: 'Tom Cook',
@@ -35,9 +35,9 @@ export default function Layout() {
                         <div className="flex h-16 items-center justify-between">
                             <div className="flex items-center">
                                 <div className="shrink-0">
-                                    <h2 className={'text-2xl font-bold '}>
+                                    <a className={'text-2xl font-bold'} href={'/'}>
                                         Calidad Integral de Zacatecas
-                                    </h2>
+                                    </a>
                                 </div>
                                 <div className="hidden md:block">
                                     <div className="ml-10 flex items-baseline space-x-4">

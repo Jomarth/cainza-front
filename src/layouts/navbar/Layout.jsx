@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Layout = ({ children }) => {
     return (
-        <div>
+        <div className={'flex flex-col items-center justify-center'}>
             <Navbar/>
             {children}
         </div>
