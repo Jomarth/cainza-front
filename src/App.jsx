@@ -7,6 +7,7 @@ import ProfilePage from './pages/auth/ProfilePage.jsx';
 import ProtectedRoute from './ProtectedRoute';
 import Layout from "./layouts/navbar/Layout.jsx";
 import ObrasFormPage from "./pages/obras/ObrasFormPage.jsx";
+import ObrasPage from "./pages/obras/ObrasPage.jsx";
 
 function App() {
     return (
@@ -20,14 +21,15 @@ function App() {
                     <Route path='/' element={<Layout>
                         <HomePage/>
                     </Layout>}/>
-                    <Route path='/login' element={<Layout><LoginPage/></Layout>}/>
-                    <Route path='/register' element={<Layout><RegisterPage/></Layout>}/>
+                    <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
+                    <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
+                    <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
 
                     {/*Selecion de rutas  protegidas */}
                     <Route element={<ProtectedRoute/>}>
-                        <Route path='/profile' element={<Layout><ProfilePage/></Layout>}/>
+                        <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>
 
-                        <Route path='/crear-obras' element={<Layout><ObrasFormPage/></Layout>}/>
+                        <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
