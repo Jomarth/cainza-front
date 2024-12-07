@@ -7,6 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProductsPage from './pages/ProductsPage';
 import ProductsFormPage from './pages/ProductsFormPage';
 import ProtectedRoute from './ProtectedRoute';
+import Layout from "./layouts/Layout.jsx";
 
 function App() {
     return (
@@ -17,16 +18,18 @@ function App() {
                     v7_relativeSplatPath: true
                 }}>
                 <Routes>
-                    <Route path='/' element={<HomePage/>}/>
-                    <Route path='/login' element={<LoginPage/>}/>
-                    <Route path='/register' element={<RegisterPage/>}/>
+                    <Route path='/' element={<Layout>
+                        <HomePage/>
+                    </Layout>}/>
+                    <Route path='/login' element={<Layout><LoginPage/></Layout>}/>
+                    <Route path='/register' element={<Layout><RegisterPage/></Layout>}/>
 
                     {/*Selecion de rutas  protegidas */}
                     <Route element={<ProtectedRoute/>}>
-                        <Route path='/profile' element={<ProfilePage/>}/>
-                        <Route path='/products' element={<ProductsPage/>}/>
-                        <Route path='/products-add' element={<ProductsFormPage/>}/>
-                        <Route path='/products/:id' element={<ProductsFormPage/>}/>
+                        <Route path='/profile' element={<Layout><ProfilePage/></Layout>}/>
+                        <Route path='/products' element={<Layout><ProductsPage/></Layout>}/>
+                        <Route path='/products-add' element={<Layout><ProductsFormPage/></Layout>}/>
+                        <Route path='/products/:id' element={<Layout><ProductsFormPage/></Layout>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
