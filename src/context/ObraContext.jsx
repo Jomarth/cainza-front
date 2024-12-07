@@ -16,11 +16,14 @@ export const useObra = () => {
 
 export const ObraProvider = ({children}) => {
     const [obras, setObras] = useState([]);
+    const [errOb, setErrOb] = useState([]);
     const createObra = async (obra) => {
         try {
             const res = await createObrasRequest(obra);
+
             console.log(res.data);
         } catch (error) {
+            setErrOb([error.response.data.message]);
             console.log([error.response.data.message]);
         }
     }// fin de createObra
@@ -35,7 +38,7 @@ export const ObraProvider = ({children}) => {
         }
     }// fin de createObra
     return (
-        <ObraContext.Provider value={{ createObra, getObras, obras }}>
+        <ObraContext.Provider value={{ createObra, getObras, obras, errOb }}>
             {children}
         </ObraContext.Provider>
     )

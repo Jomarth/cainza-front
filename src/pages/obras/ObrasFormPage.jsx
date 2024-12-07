@@ -1,15 +1,44 @@
 import FormCard from "../../layouts/FormCard.jsx";
 import {useForm} from "react-hook-form";
+import {useObra} from "../../context/ObraContext.jsx";
+import {useState} from "react";
 
 function ObrasFormPage() {
     const {register, handleSubmit, formState: {errors}} = useForm();
+    const {createObra, errOb} = useObra();
+    const cloudinaryName = import.meta.env.VITE_CLOUDINARY_NAME;
+    const [fileName, setFileName] = useState("No file chosen");
+    console.log(cloudinaryName);
 
-    const onSubmit = handleSubmit((data) => {
-        console.log(data);
+    const handleFileChange = (event) => {
+        setFileName(event.target.files[0] ? event.target.files[0].name : "No file chosen");
+    }
+
+    const onSubmit = handleSubmit(async (data) => {
+        console.log(data.imagen);
+        const formData = new FormData();
+        formData.append('file', data.imagen)
+        formData.append('upload_preset', 'doc_codepen_example');
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryName}/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+        console.log(res);
+        createObra(data);
     })
+
+
     return (
         <FormCard title={'Crear Obra Nueva'}>
             <form onSubmit={onSubmit}>
+                {
+                    errOb.map((error) => {
+                        return (<p key={error}
+                                   className={'bg-red-500 my-3 p-3 font-bold rounded-md text-center'}>
+                            {error}
+                        </p>);
+                    })
+                }
                 <label htmlFor="nombre">Nombre de la obra</label>
                 <input type="text"
                        className='w-full px-4 py-2 rounded-md my-2 text-black'
@@ -18,7 +47,7 @@ function ObrasFormPage() {
                            ...register("nombre", {required: true, minLength: 6})
                        }
                 />
-                {errors.nombre?.type === "required"  && (
+                {errors.nombre?.type === "required" && (
                     <p className="text-red-500">El nombre de la obra es requerido</p>
                 )}
                 {errors.nombre?.type === "minLength" && (
@@ -32,7 +61,7 @@ function ObrasFormPage() {
                            ...register("tramo", {required: true, minLength: 6})
                        }
                 />
-                {errors.tramo?.type === "required"  && (
+                {errors.tramo?.type === "required" && (
                     <p className="text-red-500">El tramo de la obra es requerido</p>
                 )}
                 {errors.tramo?.type === "minLength" && (
@@ -115,13 +144,31 @@ function ObrasFormPage() {
                         {errors.fecha_fin?.type === "required" && (
                             <p className="text-red-500">El fecha de fin es requerida</p>
                         )}
-
                     </div>
                 </div>
-
+                <div className="flex items-center space-x-4">
+                    <input type="file"
+                           {...register('imagen')}
+                           id="file"
+                           className="hidden" onChange={handleFileChange}/>
+                    <label htmlFor="file"
+                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                           rounded cursor-pointer">
+                        Elegir imagen
+                    </label>
+                    <span className="text-gray-700">
+                        {fileName}
+                    </span>
+                </div>
+                {fileName === "No file chosen" && (
+                    <p className="text-red-500">La imagen es requerida</p>
+                )}
 
                 <div className={'flex justify-end'}>
-                    <button type='submit' className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>Crear obra</button>
+                    <button type='submit'
+                            className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>Crear
+                        obra
+                    </button>
                 </div>
             </form>
         </FormCard>
