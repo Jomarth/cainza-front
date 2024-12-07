@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

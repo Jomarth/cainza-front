@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/auth/LoginPage.jsx'
+import RegisterPage from './pages/auth/RegisterPage.jsx'
 import {AuthProvider} from './context/AuthContext'
 import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/auth/ProfilePage.jsx';
 import ProtectedRoute from './ProtectedRoute';
 import Layout from "./layouts/navbar/Layout.jsx";
-import ObrasFormPage from "./pages/ObrasFormPage.jsx";
+import ObrasFormPage from "./pages/obras/ObrasFormPage.jsx";
 
 function App() {
     return (
@@ -26,6 +26,7 @@ function App() {
                     {/*Selecion de rutas  protegidas */}
                     <Route element={<ProtectedRoute/>}>
                         <Route path='/profile' element={<Layout><ProfilePage/></Layout>}/>
+
                         <Route path='/crear-obras' element={<Layout><ObrasFormPage/></Layout>}/>
                     </Route>
                 </Routes>

@@ -1,4 +1,4 @@
-import FormCard from "../layouts/FormCard.jsx";
+import FormCard from "../../layouts/FormCard.jsx";
 import {useForm} from "react-hook-form";
 
 function ObrasFormPage() {
@@ -22,6 +22,20 @@ function ObrasFormPage() {
                     <p className="text-red-500">El nombre de la obra es requerido</p>
                 )}
                 {errors.nombre?.type === "minLength" && (
+                    <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
+                )}
+                <label htmlFor="nombre">Tramo de la obra</label>
+                <input type="text"
+                       className='w-full px-4 py-2 rounded-md my-2 text-black'
+                       placeholder='Tramo'
+                       {
+                           ...register("tramo", {required: true, minLength: 6})
+                       }
+                />
+                {errors.tramo?.type === "required"  && (
+                    <p className="text-red-500">El tramo de la obra es requerido</p>
+                )}
+                {errors.tramo?.type === "minLength" && (
                     <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
                 )}
                 <div className={'flex flex-row'}>
@@ -52,6 +66,17 @@ function ObrasFormPage() {
                         {errors.contratista?.type === "minLength" && (
                             <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
                         )}
+                        <label htmlFor="contratista">Fecha de inicio</label>
+                        <input type="date"
+                               className='w-full px-4 py-2 rounded-md my-2 text-black'
+                               placeholder='Fecha de inicio'
+                               {
+                                   ...register("fecha_inicio", {required: true})
+                               }   />
+                        {errors.fecha_inicio?.type === "required" && (
+                            <p className="text-red-500">El fecha inicio es requerida</p>
+                        )}
+
                     </div>
                     <div className={'m-1'}>
                         <label htmlFor="estado">Estado</label>
@@ -68,24 +93,35 @@ function ObrasFormPage() {
                             <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
                         )}
                         <label htmlFor="importe">Importe</label>
-                        <input type="text"
+                        <input type="number"
                                className='w-full px-4 py-2 rounded-md my-2 text-black'
                                placeholder='Importe total'
                                {
-                                   ...register("importe", {required: true, minLength: 6})
+                                   ...register("importe", {required: true, valueAsNumber: true})
                                }   />
                         {errors.importe?.type === "required" && (
                             <p className="text-red-500">El importe es requerido</p>
                         )}
-                        {errors.importe?.type === "minLength" && (
-                            <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
+                        {errors.importe?.type === "valueAsNumber" && (
+                            <p className="text-red-500">El importe debería ser numerico</p>
                         )}
+                        <label htmlFor="contratista">Fecha de fin</label>
+                        <input type="date"
+                               className='w-full px-4 py-2 rounded-md my-2 text-black'
+                               placeholder='Fecha de fin'
+                               {
+                                   ...register("fecha_fin", {required: true})
+                               }   />
+                        {errors.fecha_fin?.type === "required" && (
+                            <p className="text-red-500">El fecha de fin es requerida</p>
+                        )}
+
                     </div>
                 </div>
 
 
                 <div className={'flex justify-end'}>
-                    <button type='submit'>Crear obra</button>
+                    <button type='submit' className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>Crear obra</button>
                 </div>
             </form>
         </FormCard>
