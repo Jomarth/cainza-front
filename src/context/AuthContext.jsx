@@ -3,9 +3,10 @@ import {registerRequest, loginRequest, verifyTokenRequest} from "../api/auth";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
@@ -14,7 +15,6 @@ export const useAuth = () => {
     return context;
 }
 
-// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,8 +28,6 @@ export const AuthProvider = ({children}) => {
             setUser(res.data);
             setIsAuthenticated(true);
         } catch (error) {
-            // console.log([error.response.data.message]);
-            //console.log(errors);
             setErrors([error.response.data.message]);
         }
     }// fin de signip
@@ -107,7 +105,7 @@ export const AuthProvider = ({children}) => {
         </AuthContext.Provider>
     )
 }// fin de Autrpvaideer
-AuthProvider.prototype = {
+AuthProvider.propTypes = {
     children: PropTypes.any
 }
   

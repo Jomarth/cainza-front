@@ -8,31 +8,34 @@ import ProtectedRoute from './ProtectedRoute';
 import Layout from "./layouts/navbar/Layout.jsx";
 import ObrasFormPage from "./pages/obras/ObrasFormPage.jsx";
 import ObrasPage from "./pages/obras/ObrasPage.jsx";
+import {ObraProvider} from "./context/ObraContext.jsx";
 
 function App() {
     return (
         <AuthProvider>
-            <BrowserRouter
-                future={{
-                    v7_startTransition: true,
-                    v7_relativeSplatPath: true
-                }}>
-                <Routes>
-                    <Route path='/' element={<Layout>
-                        <HomePage/>
-                    </Layout>}/>
-                    <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
-                    <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
-                    <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
+            <ObraProvider>
+                <BrowserRouter
+                    future={{
+                        v7_startTransition: true,
+                        v7_relativeSplatPath: true
+                    }}>
+                    <Routes>
+                        <Route path='/' element={<Layout>
+                            <HomePage/>
+                        </Layout>}/>
+                        <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
+                        <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
+                        <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
 
-                    {/*Selecion de rutas  protegidas */}
-                    <Route element={<ProtectedRoute/>}>
-                        <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>
+                        {/*Selecion de rutas  protegidas */}
+                        <Route element={<ProtectedRoute/>}>
+                            <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>
 
-                        <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+                            <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </ObraProvider>
         </AuthProvider>
     )
 }
