@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 import {useReporte} from "../../context/ReporteContext.jsx";
-import {Card, IconButton, Tooltip, Typography} from "@material-tailwind/react";
-import {PencilIcon} from "@heroicons/react/24/solid";
+import {Card, Typography} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 
 function ReportesPage() {
