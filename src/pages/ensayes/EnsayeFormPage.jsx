@@ -2,16 +2,20 @@ import FormCard from "../../layouts/FormCard.jsx";
 import {useForm} from "react-hook-form";
 import {useReporte} from "../../context/ReporteContext.jsx";
 import {useEffect} from "react";
+import {useEnsaye} from "../../context/EnsayeContext.jsx";
 
 function EnsayeFormPage() {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const { getReportes, reportes } = useReporte();
+    const { createEnsaye } = useEnsaye();
+
     useEffect(() => {
         getReportes();
     }, []);
 
     const onSubmit = handleSubmit(async (data) => {
         console.log(data);
+        createEnsaye(data);
     })
 
     return (
@@ -29,11 +33,11 @@ function EnsayeFormPage() {
                     <p className="text-red-500">El solicitante es requerido</p>
                 )}
 
-                <label htmlFor="obra">Reporte asociado</label>
+                <label htmlFor="reporte">Reporte asociado</label>
                 <select
                     className='w-full px-4 py-2 rounded-md my-2 text-black '
                     {
-                        ...register("obra", {required: true})
+                        ...register("reporte", {required: true})
                     }
                 >
                     <option value="">
@@ -47,8 +51,8 @@ function EnsayeFormPage() {
                         })
                     }
                 </select>
-                {errors.obra?.type === "required" && (
-                    <p className="text-red-500">La obra asociada es requerida</p>
+                {errors.reporte?.type === "required" && (
+                    <p className="text-red-500">EL reporte asociado es requerido</p>
                 )}
 
                 <label htmlFor="norma">Norma</label>
@@ -169,18 +173,15 @@ function EnsayeFormPage() {
                         )}
 
                         <label htmlFor="masa_muestra">Masa de la muestra</label>
-                        <input type="number"
+                        <input type="text"
                                className='w-full px-4 py-2 rounded-md my-2 text-black'
                                placeholder='Masa de la muestra'
                                {
-                                   ...register("masa_muestra", {required: true, valueAsNumber: true})
+                                   ...register("masa_muestra", {required: true})
                                }
                         />
                         {errors.masa_muestra?.type === "required" && (
                             <p className="text-red-500">La masa de la muestra es requerida</p>
-                        )}
-                        {errors.masa_muestra?.type === "valueAsNumber" && (
-                            <p className="text-red-500">la masa de la muestra debe ser numerico</p>
                         )}
 
                         <label htmlFor="profundidad">Profundidad</label>
@@ -210,6 +211,38 @@ function EnsayeFormPage() {
                 {errors.desperdicio?.type === "required" && (
                     <p className="text-red-500">El desperdicio es requerido</p>
                 )}
+
+                <label htmlFor="masa_alterada">Masa alterada</label>
+                <input type="number"
+                       className='w-full px-4 py-2 rounded-md my-2 text-black'
+                       placeholder='Masa alterada'
+                       {
+                           ...register("masa_alterada", {required: true, valueAsNumber: true})
+                       }
+                />
+                {errors.masa_alterada?.type === "required" && (
+                    <p className="text-red-500">La masa alterada es requerido</p>
+                )}
+                {errors.masa_alterada?.type === "valueAsNumber" && (
+                    <p className="text-red-500">La masa alterada debería ser numerica</p>
+                )}
+
+                <label htmlFor="tipo_granulometria">Tipo de granulometría</label>
+                <input type="number"
+                       className='w-full px-4 py-2 rounded-md my-2 text-black'
+                       placeholder='Tipo de granulometría'
+                       {
+                           ...register("tipo_granulometria", {required: true, valueAsNumber: true})
+                       }
+                />
+                {errors.tipo_granulometria?.type === "required" && (
+                    <p className="text-red-500">El tipo de granulometría es requerido</p>
+                )}
+                {errors.tipo_granulometria?.type === "valueAsNumber" && (
+                    <p className="text-red-500">El tipo de granulometría debería ser numerica</p>
+                )}
+
+
                 <div className={'flex justify-end'}>
                     <button type='submit'
                             className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>
