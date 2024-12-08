@@ -2,10 +2,14 @@ import FormCard from "../../layouts/FormCard.jsx";
 import {useObra} from "../../context/ObraContext.jsx";
 import {useEffect} from "react";
 import {useForm} from "react-hook-form";
+import {useReporte} from "../../context/ReporteContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 function ReporteFormPage() {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const {getObras, obras} = useObra();
+    const { createReporte } = useReporte();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getObras();
@@ -16,6 +20,8 @@ function ReporteFormPage() {
 
     const onSubmit = handleSubmit(async (data) => {
         console.log(data);
+        createReporte(data);
+        navigate('/ver-reportes');
     })
     return (
         <FormCard title={'Crear reporte'}>
@@ -45,12 +51,12 @@ function ReporteFormPage() {
                         {errors.fecha_reporte?.type === "required" && (
                             <p className="text-red-500">La fecha del reporte es requerido</p>
                         )}
-                        <label htmlFor="fecha_reporte">Obra asociada</label>
+                        <label htmlFor="obra">Obra asociada</label>
                         <select
                             className='w-full px-4 py-2 rounded-md my-2 text-black '
 
                             {
-                                ...register("fecha_reporte", {required: true})
+                                ...register("obra", {required: true})
                             }
                         >
                             <option value="">
@@ -64,8 +70,8 @@ function ReporteFormPage() {
                                 })
                             }
                         </select>
-                        {errors.fecha_reporte?.type === "required" && (
-                            <p className="text-red-500">La fecha del reporte es requerido</p>
+                        {errors.obra?.type === "required" && (
+                            <p className="text-red-500">La obra asociada es requerida</p>
                         )}
                     </div>
                     <div className="m-1">

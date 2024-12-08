@@ -20,7 +20,6 @@ export const ReporteProvider = ({children}) => {
     const createReporte = async (reporte) => {
         try {
             const res = await createReportesRequest(reporte);
-
             console.log(res.data);
         } catch (error) {
             setErrReportes([error.response.data.message]);
