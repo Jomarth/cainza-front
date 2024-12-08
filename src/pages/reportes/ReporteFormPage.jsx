@@ -16,8 +16,6 @@ function ReporteFormPage() {
     }, []);
     console.log('obras');
 
-
-
     const onSubmit = handleSubmit(async (data) => {
         console.log(data);
         createReporte(data);
@@ -54,7 +52,6 @@ function ReporteFormPage() {
                         <label htmlFor="obra">Obra asociada</label>
                         <select
                             className='w-full px-4 py-2 rounded-md my-2 text-black '
-
                             {
                                 ...register("obra", {required: true})
                             }

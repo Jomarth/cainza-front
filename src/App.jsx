@@ -12,6 +12,8 @@ import {ObraProvider} from "./context/ObraContext.jsx";
 import ReportesPage from "./pages/reportes/ReportesPage.jsx";
 import ReporteFormPage from "./pages/reportes/ReporteFormPage.jsx";
 import {ReporteProvider} from "./context/ReporteContext.jsx";
+import EnsayesPage from "./pages/ensayes/EnsayesPage.jsx";
+import EnsayeFormPage from "./pages/ensayes/EnsayeFormPage.jsx";
 
 function App() {
     return (
@@ -35,9 +37,15 @@ function App() {
                             <Route element={<ProtectedRoute/>}>
                                 <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>
 
+                                <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
+
                                 <Route path='/ver-reportes' element={<Layout>    <ReportesPage/>    </Layout>}/>
                                 <Route path='/crear-reportes' element={<Layout>    <ReporteFormPage/>    </Layout>}/>
-                                <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
+
+                                <Route path='/ver-ensayes' element={<Layout>    <EnsayesPage/>    </Layout>}/>
+                                <Route path='/crear-ensayes' element={<Layout>    <EnsayeFormPage/>    </Layout>}/>
+
+
                             </Route>
                         </Routes>
                     </BrowserRouter>
