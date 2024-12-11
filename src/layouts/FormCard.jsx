@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 
 function FormCard({children, title}) {
     return (
-        <div className="flex items-center justify-center">
-            <div className="bg-blue-600  w-[75%] p-10 rounded-md text-white">
-
-                <h1 className='text-2xl font-bold'>{title}</h1>
+        <div className="flex p-20 justify-center">
+            <div className="bg-gray-400 max-w-md w-full p-10 rounded-md ">
+                <h1 className='text-2xl font-bold text-center pb-[5em] text-blue-800'>{title}</h1>
                 {children}
             </div>
         </div>

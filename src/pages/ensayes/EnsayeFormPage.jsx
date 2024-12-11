@@ -3,12 +3,13 @@ import {useForm} from "react-hook-form";
 import {useReporte} from "../../context/ReporteContext.jsx";
 import {useEffect} from "react";
 import {useEnsaye} from "../../context/EnsayeContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 function EnsayeFormPage() {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const { getReportes, reportes } = useReporte();
     const { createEnsaye } = useEnsaye();
-
+    const navigate = useNavigate();
     useEffect(() => {
         getReportes();
     }, []);
@@ -16,6 +17,7 @@ function EnsayeFormPage() {
     const onSubmit = handleSubmit(async (data) => {
         console.log(data);
         createEnsaye(data);
+        navigate('/');
     })
 
     return (
