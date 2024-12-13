@@ -1,5 +1,5 @@
 import {useForm} from 'react-hook-form';
-import {useAuth} from '../context/AuthContext';
+import {useAuth} from '../../context/AuthContext.jsx';
 import {useEffect} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 
@@ -14,12 +14,11 @@ function RegisterPage() {
     }, [isAuthenticated, navigate])
 
     const onSubmit = handleSubmit(async (values) => {
-        // console.log(values);
         signup(values);
     })
     return (
-        <div className="flex items-center justify-center h-screen">
-            <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
+        <div className="flex items-center justify-center h-screen text-white">
+            <div className='bg-blue-900 max-w-md p-10 rounded-md'>
                 <h1 className='text-2xl font-bold'>
                     Register
                 </h1>
@@ -77,13 +76,10 @@ function RegisterPage() {
                         <p className="text-red-500">La longitud mínima es de 6 caracteres</p>
                     )}
 
-
-                    <button type='submit'>Regisrar</button>
+                    <div className={'flex justify-end'}>
+                        <button type='submit'>Registrar</button>
+                    </div>
                 </form>
-                <p className='flex gap-x-2 justify-between pt-5 mt-5'>
-                    Ya tienes una cuenta??
-                    <Link to="/login" className='text-sky-500'>!iniciar session!</Link>
-                </p>
             </div>
         </div>
     );

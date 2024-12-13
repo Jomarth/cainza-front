@@ -1,38 +1,56 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/auth/LoginPage.jsx'
+import RegisterPage from './pages/auth/RegisterPage.jsx'
 import {AuthProvider} from './context/AuthContext'
-import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
-import ProductsPage from './pages/ProductsPage';
-import ProductsFormPage from './pages/ProductsFormPage';
+import ProfilePage from './pages/auth/ProfilePage.jsx';
 import ProtectedRoute from './ProtectedRoute';
-import Layout from "./layouts/Layout.jsx";
+import Layout from "./layouts/navbar/Layout.jsx";
+import ObrasFormPage from "./pages/obras/ObrasFormPage.jsx";
+import ObrasPage from "./pages/obras/ObrasPage.jsx";
+import {ObraProvider} from "./context/ObraContext.jsx";
+import ReportesPage from "./pages/reportes/ReportesPage.jsx";
+import ReporteFormPage from "./pages/reportes/ReporteFormPage.jsx";
+import {ReporteProvider} from "./context/ReporteContext.jsx";
+import EnsayesPage from "./pages/ensayes/EnsayesPage.jsx";
+import EnsayeFormPage from "./pages/ensayes/EnsayeFormPage.jsx";
+import {EnsayeProvider} from "./context/EnsayeContext.jsx";
 
 function App() {
     return (
         <AuthProvider>
-            <BrowserRouter
-                future={{
-                    v7_startTransition: true,
-                    v7_relativeSplatPath: true
-                }}>
-                <Routes>
-                    <Route path='/' element={<Layout>
-                        <HomePage/>
-                    </Layout>}/>
-                    <Route path='/login' element={<Layout><LoginPage/></Layout>}/>
-                    <Route path='/register' element={<Layout><RegisterPage/></Layout>}/>
+            <ObraProvider>
+                <ReporteProvider>
+                    <EnsayeProvider>
+                        <BrowserRouter
+                            future={{
+                                v7_startTransition: true,
+                                v7_relativeSplatPath: true
+                            }}>
+                            <Routes>
+                                <Route path='/' element={<Layout>   <ObrasPage/>   </Layout>}/>
+                                <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
+                                <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
+                                <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
 
-                    {/*Selecion de rutas  protegidas */}
-                    <Route element={<ProtectedRoute/>}>
-                        <Route path='/profile' element={<Layout><ProfilePage/></Layout>}/>
-                        <Route path='/products' element={<Layout><ProductsPage/></Layout>}/>
-                        <Route path='/products-add' element={<Layout><ProductsFormPage/></Layout>}/>
-                        <Route path='/products/:id' element={<Layout><ProductsFormPage/></Layout>}/>
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+                                {/*Selecion de rutas  protegidas */}
+                                <Route element={<ProtectedRoute/>}>
+                                    <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>
+
+                                    <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
+
+                                    <Route path='/ver-reportes' element={<Layout>    <ReportesPage/>    </Layout>}/>
+                                    <Route path='/crear-reportes' element={<Layout>    <ReporteFormPage/>    </Layout>}/>
+
+                                    <Route path='/ver-ensayes' element={<Layout>    <EnsayesPage/>    </Layout>}/>
+                                    <Route path='/crear-ensayes' element={<Layout>    <EnsayeFormPage/>    </Layout>}/>
+
+
+                                </Route>
+                            </Routes>
+                        </BrowserRouter>
+                    </EnsayeProvider>
+                </ReporteProvider>
+            </ObraProvider>
         </AuthProvider>
     )
 }
