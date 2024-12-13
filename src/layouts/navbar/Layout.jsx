@@ -1,13 +1,27 @@
-import Navbar from "./Navbar.jsx";
 import PropTypes from "prop-types";
+import {Navbar} from "./Navbar.jsx";
+import AuthLink from "./AuthLink.jsx";
 
-const Layout = ({ children }) => {
+const Layout = ({children}) => {
+
     return (
-        <div className={'flex flex-col items-center justify-center'}>
-            <Navbar/>
+        <div className={'flex flex-col w-screen h-screen bg-light-blue-900 text-white'}>
+            <div className={'flex flex-row justify-between items-center px-7'}>
+                <div>
+                    <Navbar/>
+                    <a href="/">
+                        LockBox
+                    </a>
+                </div>
+
+                <div className={'flex flex-row space-x-7'}>
+                    <AuthLink/>
+                </div>
+            </div>
             {children}
         </div>
-    );
+    )
+        ;
 }
 
 Layout.propTypes = {

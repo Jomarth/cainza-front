@@ -1,126 +1,239 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import ItemNavbar from "./ItemNavbar.jsx";
-import {itemsNavbar} from "../../contents/nav-items.js";
+import React from "react";
+import {
+    IconButton,
+    Typography,
+    List,
+    ListItem,
+    ListItemPrefix,
+    ListItemSuffix,
+    Chip,
+    Accordion,
+    AccordionHeader,
+    AccordionBody,
+    Alert,
+    Input,
+    Drawer,
+    Card,
+} from "@material-tailwind/react";
+import {
+    PresentationChartBarIcon,
+    ShoppingBagIcon,
+    UserCircleIcon,
+    Cog6ToothIcon,
+    InboxIcon,
+    PowerIcon,
+} from "@heroicons/react/24/solid";
+import {
+    ChevronRightIcon,
+    ChevronDownIcon,
+    CubeTransparentIcon,
+    MagnifyingGlassIcon,
+    Bars3Icon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
-const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
-]
-const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
+export function Navbar() {
+    const [open, setOpen] = React.useState(0);
+    const [openAlert, setOpenAlert] = React.useState(true);
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
+    const handleOpen = (value) => {
+        setOpen(open === value ? 0 : value);
+    };
 
-export default function Layout() {
+    const openDrawer = () => setIsDrawerOpen(true);
+    const closeDrawer = () => setIsDrawerOpen(false);
+
     return (
         <>
-            <div className="w-screen text-white">
-                <Disclosure as="nav" className="bg-blue-950">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex h-16 items-center justify-between">
-                            <div className="flex items-center">
-                                <div className="shrink-0">
-                                    <a className={'text-2xl font-bold'} href={'/'}>
-                                        Calidad Integral de Zacatecas
-                                    </a>
-                                </div>
-                                <div className="hidden md:block">
-                                    <div className="ml-10 flex items-baseline space-x-4">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="hidden md:block">
-                                <div className="ml-4 flex items-center md:ml-6">
-                                    {
-                                        itemsNavbar.map(item => {
-                                            return (<ItemNavbar trigger={item.trigger} links={item.links} key={item.trigger} />)
-                                        })
-                                    }
-                                </div>
-                            </div>
-                            <div className="-mr-2 flex md:hidden">
-                                {/* Mobile menu button */}
-                                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                    <span className="absolute -inset-0.5" />
-                                    <span className="sr-only">Open main menu</span>
-                                    <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
-                                    <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-[open]:block" />
-                                </DisclosureButton>
-                            </div>
-                        </div>
+            <IconButton variant="text" size="lg" onClick={openDrawer}>
+                {isDrawerOpen ? (
+                    <XMarkIcon className="h-8 w-8 stroke-2" />
+                ) : (
+                    <Bars3Icon className="h-8 w-8 stroke-2" />
+                )}
+            </IconButton>
+            <Drawer open={isDrawerOpen} onClose={closeDrawer}>
+                <Card
+                    color="transparent"
+                    shadow={false}
+                    className="h-[calc(100vh-2rem)] w-full p-4"
+                >
+                    <div className="mb-2 flex items-center gap-4 p-4">
+                        <img
+                            src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
+                            alt="brand"
+                            className="h-8 w-8"
+                        />
+                        <Typography variant="h5" color="blue-gray">
+                            Sidebar
+                        </Typography>
                     </div>
-
-                    <DisclosurePanel className="md:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                            {navigation.map((item) => (
-                                <DisclosureButton
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    aria-current={item.current ? 'page' : undefined}
-                                    className={classNames(
-                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium',
-                                    )}
+                    <div className="p-2">
+                        <Input
+                            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            label="Search"
+                        />
+                    </div>
+                    <List>
+                        <Accordion
+                            open={open === 1}
+                            icon={
+                                <ChevronDownIcon
+                                    strokeWidth={2.5}
+                                    className={`mx-auto h-4 w-4 transition-transform ${
+                                        open === 1 ? "rotate-180" : ""
+                                    }`}
+                                />
+                            }
+                        >
+                            <ListItem className="p-0" selected={open === 1}>
+                                <AccordionHeader
+                                    onClick={() => handleOpen(1)}
+                                    className="border-b-0 p-3"
                                 >
-                                    {item.name}
-                                </DisclosureButton>
-                            ))}
-                        </div>
-                        <div className="border-t border-gray-700 pb-3 pt-4">
-                            <div className="flex items-center px-5">
-                                <div className="shrink-0">
-                                    <img alt="" src={user.imageUrl} className="size-10 rounded-full" />
-                                </div>
-                                <div className="ml-3">
-                                    <div className="text-base/5 font-medium text-white">{user.name}</div>
-                                    <div className="text-sm font-medium text-gray-400">{user.email}</div>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                    <ListItemPrefix>
+                                        <PresentationChartBarIcon className="h-5 w-5" />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-normal">
+                                        Dashboard
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Analytics
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Reporting
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Projects
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+                        <Accordion
+                            open={open === 2}
+                            icon={
+                                <ChevronDownIcon
+                                    strokeWidth={2.5}
+                                    className={`mx-auto h-4 w-4 transition-transform ${
+                                        open === 2 ? "rotate-180" : ""
+                                    }`}
+                                />
+                            }
+                        >
+                            <ListItem className="p-0" selected={open === 2}>
+                                <AccordionHeader
+                                    onClick={() => handleOpen(2)}
+                                    className="border-b-0 p-3"
                                 >
-                                    <span className="absolute -inset-1.5" />
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon aria-hidden="true" className="size-6" />
-                                </button>
-                            </div>
-                            <div className="mt-3 space-y-1 px-2">
-                                {userNavigation.map((item) => (
-                                    <DisclosureButton
-                                        key={item.name}
-                                        as="a"
-                                        href={item.href}
-                                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                                    >
-                                        {item.name}
-                                    </DisclosureButton>
-                                ))}
-                            </div>
+                                    <ListItemPrefix>
+                                        <ShoppingBagIcon className="h-5 w-5" />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-normal">
+                                        E-Commerce
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Orders
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Products
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+                        <hr className="my-2 border-blue-gray-50" />
+                        <ListItem>
+                            <ListItemPrefix>
+                                <InboxIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Inbox
+                            <ListItemSuffix>
+                                <Chip
+                                    value="14"
+                                    size="sm"
+                                    variant="ghost"
+                                    color="blue-gray"
+                                    className="rounded-full"
+                                />
+                            </ListItemSuffix>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemPrefix>
+                                <UserCircleIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Profile
+                        </ListItem>
+                        <ListItem>
+                            <ListItemPrefix>
+                                <Cog6ToothIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Settings
+                        </ListItem>
+                        <ListItem>
+                            <ListItemPrefix>
+                                <PowerIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Log Out
+                        </ListItem>
+                    </List>
+                    <Alert
+                        open={openAlert}
+                        className="mt-auto"
+                        onClose={() => setOpenAlert(false)}
+                    >
+                        <CubeTransparentIcon className="mb-4 h-12 w-12" />
+                        <Typography variant="h6" className="mb-1">
+                            Upgrade to PRO
+                        </Typography>
+                        <Typography variant="small" className="font-normal opacity-80">
+                            Upgrade to Material Tailwind PRO and get even more components,
+                            plugins, advanced features and premium.
+                        </Typography>
+                        <div className="mt-4 flex gap-3">
+                            <Typography
+                                as="a"
+                                href="#"
+                                variant="small"
+                                className="font-medium opacity-80"
+                                onClick={() => setOpenAlert(false)}
+                            >
+                                Dismiss
+                            </Typography>
+                            <Typography
+                                as="a"
+                                href="#"
+                                variant="small"
+                                className="font-medium"
+                            >
+                                Upgrade Now
+                            </Typography>
                         </div>
-                    </DisclosurePanel>
-                </Disclosure>
-
-                <main>
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
-                </main>
-            </div>
+                    </Alert>
+                </Card>
+            </Drawer>
         </>
-    )
+    );
 }

@@ -14,7 +14,7 @@ function ObrasPage() {
     });
 
     return (
-        <div className="flex flex-col w-screen md:grid md:gap-4 md:grid-cols-3 md:grid-rows-3 px-2 space-y-3">
+        <div className="flex flex-col md:grid md:gap-4 md:grid-cols-3 md:grid-rows-3 px-2 space-y-3">
             {
                 obras.map((obra) => {
                     return (
