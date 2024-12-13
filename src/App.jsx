@@ -2,7 +2,6 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage.jsx'
 import RegisterPage from './pages/auth/RegisterPage.jsx'
 import {AuthProvider} from './context/AuthContext'
-import HomePage from './pages/HomePage';
 import ProfilePage from './pages/auth/ProfilePage.jsx';
 import ProtectedRoute from './ProtectedRoute';
 import Layout from "./layouts/navbar/Layout.jsx";
@@ -28,9 +27,7 @@ function App() {
                                 v7_relativeSplatPath: true
                             }}>
                             <Routes>
-                                <Route path='/' element={<Layout>
-                                    <HomePage/>
-                                </Layout>}/>
+                                <Route path='/' element={<Layout>   <ObrasPage/>   </Layout>}/>
                                 <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
                                 <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
                                 <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
