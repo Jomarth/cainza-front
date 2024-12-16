@@ -1,6 +1,12 @@
 import {createContext, useContext, useState} from "react";
 import PropTypes from "prop-types";
-import {createObrasRequest, verObrasRequest} from "../api/obras.js";
+import {
+    createObrasRequest,
+    deleteObraRequest,
+    getObraRequest,
+    updateObraRequest,
+    verObrasRequest
+} from "../api/obras.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ObraContext = createContext();
@@ -37,8 +43,33 @@ export const ObraProvider = ({children}) => {
             console.log([error.response.data.message]);
         }
     }// fin de createObra
+    const getObra = async(id)=>{
+        try{
+            const res= await getObraRequest(id)
+            return res.data
+        }catch(error){
+            console.log(error)
+        }
+    }//fin de getProduct
+
+    const updateObra = async(id, product)=>{
+        try{
+            await updateObraRequest(id, product);
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const deletObra = async(id)=>{
+        try{
+            const res= await deleteObraRequest(id);
+            if (res.status ===200)
+                setObras(obras.filter(obra => obra._id !== id));
+        }catch (error){
+            console.log(error)
+        }
+    }// fin de Delete product
     return (
-        <ObraContext.Provider value={{ createObra, getObras, obras, errOb }}>
+        <ObraContext.Provider value={{ createObra, getObras,getObra, obras, updateObra, deletObra, errOb }}>
             {children}
         </ObraContext.Provider>
     )

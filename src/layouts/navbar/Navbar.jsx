@@ -46,12 +46,14 @@ export default function Layout() {
                                             <ItemNavbar trigger={item.trigger} links={item.links} key={item.trigger}/>)
                                     })
                                 }
-                                {
-                                    isAuthenticated ? <Link to={'/'} onClick={() => {
-                                            logout()
-                                        }}>Cerrar sesión</Link> :
-                                        <Link to={'/login'}>Iniciar sesión</Link>
-                                }
+                                <div className={'pl-3'}>
+                                    {
+                                        isAuthenticated ? <Link to={'/'} onClick={() => {
+                                                logout()
+                                            }}>Cerrar sesión</Link> :
+                                            <Link to={'/login'}>Iniciar sesión</Link>
+                                    }
+                                </div>
                             </div>
                         </div>
                         <div className="-mr-2 flex md:hidden">
@@ -85,7 +87,6 @@ export default function Layout() {
                             </DisclosureButton>
                         ))}
                     </div>
-
                 </DisclosurePanel>
             </Disclosure>
 

@@ -3,11 +3,39 @@ import {useForm} from "react-hook-form";
 import {useReporte} from "../../context/ReporteContext.jsx";
 import {useEffect} from "react";
 import {useEnsaye} from "../../context/EnsayeContext.jsx";
+import {useNavigate, useParams} from "react-router-dom";
 
 function EnsayeFormPage() {
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, setValue, handleSubmit, formState: {errors}} = useForm();
     const { getReportes, reportes } = useReporte();
-    const { createEnsaye } = useEnsaye();
+    const { createEnsaye, getEnsaye, updateEnsaye } = useEnsaye();
+    const params = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function loadEnsaye() {
+            if (params.id) {
+                const ensaye = await getEnsaye(params.id);
+                setValue('solicitante', ensaye.solicitante);
+                setValue('reporte', ensaye.reporte._id);
+                setValue('norma', ensaye.norma);
+                setValue('fecha_entrega', ensaye.fecha_entrega);
+                setValue('localizacion', ensaye.localizacion);
+                setValue('tipo_material', ensaye.tipo_material);
+                setValue('peso_volumetrico', ensaye.peso_volumetrico);
+                setValue('volumen_tara', ensaye.volumen_tara);
+                setValue('fecha_muestreo', ensaye.fecha_muestreo);
+                setValue('ubicacion_muestra', ensaye.ubicacion_muestra);
+                setValue('capa', ensaye.capa);
+                setValue('masa_muestra', ensaye.masa_muestra);
+                setValue('profundidad', ensaye.profundidad);
+                setValue('desperdicio', ensaye.desperdicio);
+                setValue('masa_alterada', ensaye.masa_alterada);
+                setValue('tipo_granulometria', ensaye.tipo_granulometria);
+            }
+        }
+        loadEnsaye();
+    }, [params.id, getEnsaye, setValue]);
 
     useEffect(() => {
         getReportes();
@@ -15,7 +43,12 @@ function EnsayeFormPage() {
 
     const onSubmit = handleSubmit(async (data) => {
         console.log(data);
-        createEnsaye(data);
+        if (params.id){
+            updateEnsaye(params.id);
+        } else {
+            createEnsaye(data);
+        }
+        navigate('/ver-ensayes')
     })
 
     return (
@@ -246,7 +279,7 @@ function EnsayeFormPage() {
                 <div className={'flex justify-end'}>
                     <button type='submit'
                             className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>
-                        Crear ensaye
+                        {params.id ? 'Actualizar ensaye' :  'Crear ensaye'}
                     </button>
                 </div>
             </form>

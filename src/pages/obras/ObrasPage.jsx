@@ -16,9 +16,9 @@ function ObrasPage() {
     return (
         <div className="flex flex-col w-screen md:grid md:gap-4 md:grid-cols-3 md:grid-rows-3 px-2 space-y-3">
             {
-                obras.map((obra) => {
+                obras?.map((obra) => {
                     return (
-                        <ObraCard name={obra.nombre} image={obra.imagen} link={'/ver-obra/' + obra._id} key={obra.nombre}/>
+                        <ObraCard name={obra.nombre} image={obra.imagen} link={'/editar-obras/' + obra._id} key={obra.nombre}/>
                     )
                 })
             }

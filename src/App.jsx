@@ -32,8 +32,10 @@ function App() {
                                 </Layout>}/>
                                 <Route path='/login' element={<Layout>  <LoginPage/>    </Layout>}/>
                                 <Route path='/register' element={<Layout>   <RegisterPage/> </Layout>}/>
+
                                 <Route path='/ver-obras' element={<Layout>  <ObrasPage/>    </Layout>}/>
                                 <Route path='/crear-obras' element={<Layout>    <ObrasFormPage/>    </Layout>}/>
+                                <Route path='/editar-obras/:id' element={<Layout>    <ObrasFormPage/>    </Layout>} />
 
                                 <Route path='/ver-reportes' element={<Layout>    <ReportesPage/>    </Layout>}/>
                                 <Route path='/crear-reportes' element={<Layout>    <ReporteFormPage/>    </Layout>}/>
@@ -41,6 +43,8 @@ function App() {
 
                                 <Route path='/ver-ensayes' element={<Layout>    <EnsayesPage/>    </Layout>}/>
                                 <Route path='/crear-ensayes' element={<Layout>    <EnsayeFormPage/>    </Layout>}/>
+                                <Route path='/editar-ensayes/:id' element={<Layout>    <EnsayeFormPage/>    </Layout>} />
+
                                 {/*Selecion de rutas  protegidas */}
                                 <Route element={<ProtectedRoute/>}>
                                     <Route path='/profile' element={<Layout>    <ProfilePage/>  </Layout>}/>

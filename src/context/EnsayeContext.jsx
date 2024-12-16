@@ -1,6 +1,12 @@
 import {createContext, useContext, useState} from "react";
 import PropTypes from "prop-types";
-import {createEnsayesRequest, verEnsayesRequest} from "../api/ensayes.js";
+import {
+    createEnsayesRequest,
+    deleteEnsayeRequest,
+    getEnsayeRequest,
+    updateEnsayeRequest,
+    verEnsayesRequest
+} from "../api/ensayes.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const EnsayeContext = createContext();
@@ -36,8 +42,32 @@ export const EnsayeProvider = ({children}) => {
             console.log([error.response.data.message]);
         }
     }// fin de createEnsaye
+    const getEnsaye = async(id)=>{
+        try{
+            const res= await getEnsayeRequest(id)
+            return res.data
+        }catch(error){
+            console.log(error)
+        }
+    }//fin de getProduct
+    const updateEnsaye = async(id, product)=>{
+        try{
+            await updateEnsayeRequest(id, product);
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const deleteEnsaye = async(id)=>{
+        try{
+            const res= await deleteEnsayeRequest(id);
+            if (res.status ===200)
+                setEnsayes(ensayes.filter(ensaye => ensaye._id !== id));
+        }catch (error){
+            console.log(error)
+        }
+    }// fin de Delete product
     return (
-        <EnsayeContext.Provider value={{ createEnsaye, getEnsayes, ensayes, errEnsayes }}>
+        <EnsayeContext.Provider value={{ createEnsaye, getEnsayes, getEnsaye,updateEnsaye, deleteEnsaye, ensayes, errEnsayes }}>
             {children}
         </EnsayeContext.Provider>
     )

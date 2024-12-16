@@ -1,18 +1,37 @@
 import FormCard from "../../layouts/FormCard.jsx";
 import {useForm} from "react-hook-form";
 import {useObra} from "../../context/ObraContext.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 function ObrasFormPage() {
-    const {register, handleSubmit, formState: {errors}} = useForm();
-    const {createObra, errOb} = useObra();
+    const {register, setValue, handleSubmit, formState: {errors}} = useForm();
+    const {createObra, errOb, getObra, deleteObra} = useObra();
     const cloudinaryName = import.meta.env.VITE_CLOUDINARY_NAME;
     const [fileName, setFileName] = useState("No file chosen");
-    console.log(cloudinaryName);
+    const params = useParams();
+
 
     const handleFileChange = (event) => {
         setFileName(event.target.files[0] ? event.target.files[0].name : "No file chosen");
     }
+    useEffect(() => {
+        async function loadReporte() {
+            if (params.id) {
+                const obra = await getObra(params.id);
+                setValue('nombre', obra.nombre);
+                setValue('tramo', obra.tramo);
+                setValue('dependencia', obra.dependencia);
+                setValue('contratista', obra.contratista);
+                setValue('fecha_inicio', obra.fecha_inicio);
+                setValue('estado', obra.estado);
+                setValue('importe', obra.importe);
+                setValue('fecha_fin', obra.fecha_fin);
+            }
+        }
+        loadReporte();
+    }, [params.id, getObra, setValue]);
+
 
     const onSubmit = handleSubmit(async (data) => {
         console.log(data.imagen);
@@ -53,7 +72,7 @@ function ObrasFormPage() {
                 {errors.nombre?.type === "minLength" && (
                     <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
                 )}
-                <label htmlFor="nombre">Tramo de la obra</label>
+                <label htmlFor="tramo">Tramo de la obra</label>
                 <input type="text"
                        className='w-full px-4 py-2 rounded-md my-2 text-black'
                        placeholder='Tramo'
@@ -95,7 +114,7 @@ function ObrasFormPage() {
                         {errors.contratista?.type === "minLength" && (
                             <p className="text-red-500">La longitud mínima es de 6 carácteres</p>
                         )}
-                        <label htmlFor="contratista">Fecha de inicio</label>
+                        <label htmlFor="fecha_inicio">Fecha de inicio</label>
                         <input type="date"
                                className='w-full px-4 py-2 rounded-md my-2 text-black'
                                placeholder='Fecha de inicio'
@@ -134,7 +153,7 @@ function ObrasFormPage() {
                         {errors.importe?.type === "valueAsNumber" && (
                             <p className="text-red-500">El importe debería ser numerico</p>
                         )}
-                        <label htmlFor="contratista">Fecha de fin</label>
+                        <label htmlFor="fecha_fin">Fecha de fin</label>
                         <input type="date"
                                className='w-full px-4 py-2 rounded-md my-2 text-black'
                                placeholder='Fecha de fin'
@@ -166,9 +185,12 @@ function ObrasFormPage() {
 
                 <div className={'flex justify-end'}>
                     <button type='submit'
-                            className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>Crear
-                        obra
+                            className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>
+                        {params.id ? 'Actualizar obra' :  'Crear obra'}
                     </button>
+                    {
+                        params.id ? <button className={'p-1 ml-2 rounded-md bg-red-500'} onClick={() => {deleteObra(params.id)}}>Eliminar obra</button> : ''
+                    }
                 </div>
             </form>
         </FormCard>
