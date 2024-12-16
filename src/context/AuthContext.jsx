@@ -1,5 +1,5 @@
 import {createContext, useState, useContext, useEffect} from "react";
-import {registerRequest, loginRequest, verifyTokenRequest} from "../api/auth";
+import {registerRequest, loginRequest, verifyTokenRequest, logoutRequest} from "../api/auth";
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie';
 
@@ -43,6 +43,13 @@ export const AuthProvider = ({children}) => {
             setErrors([error.response.data.message]);
         }
     }// fin de signin
+
+    const logout = ()=>{
+        logoutRequest();
+        Cookies.remove('token');
+        setIsAuthenticated(false);
+        setUser(null)
+    }// fin de logout
 
     useEffect(() => {
         if (errors.length > 0) {
@@ -96,6 +103,7 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{
             signin,
             signup,
+            logout,
             user,
             isAuthenticated,
             errors,

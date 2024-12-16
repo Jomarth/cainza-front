@@ -22,14 +22,6 @@ function ObrasPage() {
                     )
                 })
             }
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
-            <ObraCard name={'nombre de la obra'} image={'cld-sample-5'} link={'/'} />
         </div>
     );
 }

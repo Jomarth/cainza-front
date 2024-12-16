@@ -3,13 +3,30 @@ import {useObra} from "../../context/ObraContext.jsx";
 import {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useReporte} from "../../context/ReporteContext.jsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function ReporteFormPage() {
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm();
     const {getObras, obras} = useObra();
-    const { createReporte } = useReporte();
+    const { createReporte, getReporte, updateReporte } = useReporte();
     const navigate = useNavigate();
+    const params = useParams();
+
+    useEffect(() => {
+        async function loadReporte() {
+            if (params.id) {
+                const reporte = await getReporte(params.id);
+                setValue('destinatario', reporte.destinatario);
+                setValue('fecha_reporte', reporte.fecha_reporte);
+                setValue('obra', reporte.obra);
+                setValue('no_ensayes', reporte.no_ensayes);
+                setValue('lugar', reporte.lugar);
+                setValue('objetivo', reporte.objetivo);
+                setValue('observacion', reporte.observacion);
+            }
+        }
+        loadReporte();
+    }, [params.id, getReporte, setValue]);
 
     useEffect(() => {
         getObras();
@@ -17,8 +34,11 @@ function ReporteFormPage() {
     console.log('obras');
 
     const onSubmit = handleSubmit(async (data) => {
-        console.log(data);
-        createReporte(data);
+        if (params.id) {
+            updateReporte(params.id, data);
+        } else {
+            createReporte(data);
+        }
         navigate('/ver-reportes');
     })
     return (
@@ -124,8 +144,8 @@ function ReporteFormPage() {
                 )}
                 <div className={'flex justify-end'}>
                     <button type='submit'
-                            className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>Crear
-                        reporte
+                            className={'bg-blue-200 hover:bg-blue-400 hover:text-white text-black p-2 rounded-lg'}>
+                        {params.id ? 'Actualizar reporte' :  'Crear reporte'}
                     </button>
                 </div>
             </form>

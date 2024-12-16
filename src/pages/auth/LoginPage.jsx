@@ -10,7 +10,7 @@ function LoginPage() {
 
     useEffect(() => {
         if (isAuthenticated)
-            navigate('/profile');
+            navigate('/crear-obras');
     }, [navigate, isAuthenticated]);
 
 

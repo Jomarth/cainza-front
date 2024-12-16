@@ -1,6 +1,12 @@
 import {createContext, useContext, useState} from "react";
 import PropTypes from "prop-types";
-import {createReportesRequest, verReportesRequest} from "../api/reportes.js";
+import {
+    createReportesRequest,
+    deleteReporteRequest,
+    getReporteRequest,
+    updateReporteRequest,
+    verReportesRequest
+} from "../api/reportes.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ReporteContext = createContext();
@@ -36,8 +42,35 @@ export const ReporteProvider = ({children}) => {
             console.log([error.response.data.message]);
         }
     }// fin de createReporte
+
+    const getReporte = async(id)=>{
+        try{
+            const res= await getReporteRequest(id)
+            return res.data
+        }catch(error){
+            console.log(error)
+        }
+    }//fin de getProduct
+
+    const updateReporte = async(id, product)=>{
+        try{
+            await updateReporteRequest(id, product);
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const deletReporte = async(id)=>{
+        try{
+            const res= await deleteReporteRequest(id);
+            if (res.status ===200)
+                setReportes(reportes.filter(reporte => reporte._id !== id));
+        }catch (error){
+            console.log(error)
+        }
+    }// fin de Delete product
+
     return (
-        <ReporteContext.Provider value={{ createReporte, getReportes, reportes, errReportes }}>
+        <ReporteContext.Provider value={{ createReporte, getReportes, getReporte,deletReporte, updateReporte, reportes, errReportes }}>
             {children}
         </ReporteContext.Provider>
     )

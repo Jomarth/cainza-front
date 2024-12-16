@@ -4,7 +4,7 @@ import {Card, Typography} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 
 function ReportesPage() {
-    const {getReportes, reportes} = useReporte();
+    const {getReportes, reportes, deletReporte } = useReporte();
     const TABLE_HEAD = ["Obra", "Solicitante", "No. Ensayes", "Lugar", "Fecha", ""];
 
     useEffect(() => {
@@ -95,9 +95,18 @@ function ReportesPage() {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    <Link to={'/'}>
+                                    <Link to={'/editar-reportes/'+_id}>
                                         Editar
                                     </Link>
+                                </Typography>
+                                <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                >
+                                    <button onClick={() => deletReporte(_id)}>
+                                        Eliminar
+                                    </button>
                                 </Typography>
                             </td>
                         </tr>
