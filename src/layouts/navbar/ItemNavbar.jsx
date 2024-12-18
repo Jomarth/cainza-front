@@ -1,7 +1,9 @@
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
 import PropTypes from "prop-types";
+import {useNavigate} from 'react-router-dom';
 
 function ItemNavbar({trigger, links}) {
+    const navigate = useNavigate();
 
     return (
         <Menu as="div" className="relative ml-3">
@@ -19,11 +21,12 @@ function ItemNavbar({trigger, links}) {
                 {
                     links.map((link) => {
                         return (
-                            <MenuItem key={link?.name}><a
-                                href={link?.href + trigger.toLowerCase()}
-                                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none">
+                            <MenuItem key={link?.name}>
+                                <button onClick={navigate(link?.href + trigger.toLowerCase())}
+                                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                                    >
                                 {link?.name}
-                            </a>
+                                </button>
                             </MenuItem>)
                     })
                 }
