@@ -1,8 +1,8 @@
 const linksArray = [{
-    href: 'ver-',
+    href: '/ver-',
     name: 'Ver'
 }, {
-    href: 'crear-',
+    href: '/crear-',
     name: 'Crear'
 }];
 
