@@ -34,15 +34,7 @@ function ObrasFormPage() {
 
 
     const onSubmit = handleSubmit(async (data) => {
-        console.log(data.imagen);
-        const formData = new FormData();
-        formData.append('file', data.imagen)
-        formData.append('upload_preset', 'doc_codepen_example');
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryName}/upload`, {
-            method: 'POST',
-            body: formData,
-        });
-        console.log(res);
+        console.log(data);
         createObra(data);
     })
 
@@ -165,23 +157,6 @@ function ObrasFormPage() {
                         )}
                     </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <input type="file"
-                           {...register('imagen')}
-                           id="file"
-                           className="hidden" onChange={handleFileChange}/>
-                    <label htmlFor="file"
-                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
-                           rounded cursor-pointer">
-                        Elegir imagen
-                    </label>
-                    <span className="text-gray-700">
-                        {fileName}
-                    </span>
-                </div>
-                {fileName === "No file chosen" && (
-                    <p className="text-red-500">La imagen es requerida</p>
-                )}
 
                 <div className={'flex justify-end'}>
                     <button type='submit'
