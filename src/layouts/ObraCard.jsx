@@ -10,7 +10,7 @@ function ObraCard({name, image, link}) {
                 <CloudinaryImage publicId={image}/>
                 <div className={'flex justify-end pt-2'}>
                     <Link to={link}>
-                        Ver más...
+                        Editar...
                     </Link>
                 </div>
             </div>

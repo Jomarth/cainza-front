@@ -18,7 +18,7 @@ function ObrasPage() {
             {
                 obras?.map((obra) => {
                     return (
-                        <ObraCard name={obra.nombre} image={obra.imagen} link={'/editar-obras/' + obra._id} key={obra.nombre}/>
+                        <ObraCard name={obra.nombre} image={obra.imagen} link={'/editar-obras/' + obra._id} key={obra._id}/>
                     )
                 })
             }
